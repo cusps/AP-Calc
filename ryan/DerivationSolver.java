@@ -1,6 +1,4 @@
-
 public class DerivationSolver {
-
 	private String equation;
 	private StringBuilder builder;
 
@@ -8,7 +6,8 @@ public class DerivationSolver {
 		builder = new StringBuilder();
 	}
 
-	public void powerRule(String fx) {
+	public StringBuilder powerRule(String fx) {
+		purgeOldData();
 		int count = 0;
 		int power = 1;
 		String powerString = "";
@@ -86,14 +85,18 @@ public class DerivationSolver {
 		if(builder.substring(builder.length() - 3, builder.length()).equals(" + ") || builder.substring(builder.length() - 3, builder.length()).equals(" - "))
 			builder.delete(builder.length() - 3, builder.length());
 			
-		System.out.println(builder);
+		return builder;
 	}
 
-	public void productRule(String fx, String gx) {
-
+	public StringBuilder productRule(String fx, String gx) 
+	{
+		purgeOldData();
+		builder.append(powerRule(fx) + "(" + gx + ")" + " + " + powerRule(gx) + "(" + fx + ")");
+		return builder; //send to be print in frame class; also is printing weirdly rn so we will have to fix this
 	}
 
-	public void quotientRule(String fx, String gx) {
+	public void quotientRule(String fx, String gx) 
+	{
 
 	}
 	
