@@ -238,13 +238,13 @@ public class ProgramFrame extends JFrame {
 				if(powerSelector.isSelected())
 				{
 					fx = powerFXTextField.getText();
-					solver.powerRule(fx);
+					System.out.println(solver.powerRule(fx));
 				}	
 				if(productSelector.isSelected())
 				{	
 					fx = productFXTextField.getText();
 					gx = productGXTextField.getText();
-					solver.productRule(fx, gx);
+					System.out.println(solver.productRule(fx, gx));
 				}	
 				else
 				{
