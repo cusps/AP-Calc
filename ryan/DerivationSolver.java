@@ -6,8 +6,7 @@ public class DerivationSolver {
 		builder = new StringBuilder();
 	}
 
-	public StringBuilder powerRule(String fx) {
-		purgeOldData();
+	public String powerRule(String fx) {
 		int count = 0;
 		int power = 1;
 		String powerString = "";
@@ -52,11 +51,9 @@ public class DerivationSolver {
 				
 				power = Integer.parseInt(powerString);
 				
-				//if(power - 1 > 1)
-					builder.append((tempBase * power) + "x^" + (power - 1));
-				//else
-					//builder.append(tempBase * power);
-				
+				// Actually do the math of power rule
+				builder.append((tempBase * power) + "x^" + (power - 1));
+								
 				// Reset all data for the next term!!
 				power = 1;
 				powerString = "";
@@ -82,22 +79,31 @@ public class DerivationSolver {
 		// This disaster of an if statement checks if a constant was at the end
 		// My program sucks so it takes the derivative of a constant and doesn't even add anything
 		// So this removes that last "fragment" thats left, which is either " - " or " + "
-		if(builder.substring(builder.length() - 3, builder.length()).equals(" + ") || builder.substring(builder.length() - 3, builder.length()).equals(" - "))
-			builder.delete(builder.length() - 3, builder.length());
-			
-		return builder;
+		if(builder.toString().length() > 3)
+			if(builder.substring(builder.length() - 3, builder.length()).equals(" + ") || builder.substring(builder.length() - 3, builder.length()).equals(" - "))
+				builder.delete(builder.length() - 3, builder.length());
+		
+		// Purges data and saves our string
+		String returnString = builder.toString();
+		purgeOldData();
+		
+		return returnString;
 	}
 
-	public StringBuilder productRule(String fx, String gx) 
+	public String productRule(String fx, String gx) 
 	{
 		purgeOldData();
 		builder.append(powerRule(fx) + "(" + gx + ")" + " + " + powerRule(gx) + "(" + fx + ")");
-		return builder; //send to be print in frame class; also is printing weirdly rn so we will have to fix this
+		return builder.toString();
 	}
 
-	public void quotientRule(String fx, String gx) 
+	public String quotientRule(String fx, String gx) 
 	{
-
+		purgeOldData();
+		String numerator = ("(" + gx + ") " + powerRule(fx) + " - " + fx + " (" + powerRule(gx) + ")");
+		String denominator = "(" + gx + ")" + "^2";
+		
+		return numerator + "\n-----------------------------\n" + denominator;
 	}
 	
 	public void purgeOldData()

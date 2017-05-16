@@ -1,8 +1,8 @@
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,16 +21,16 @@ public class ProgramFrame extends JFrame {
 	private JTextField productFXTextField;
 	private JTextField productGXTextField;
 	private JTextField powerFXTextField;
-	
+
 	private DerivationSolver solver;
-	
+
 	private String fx, gx;
-	
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -240,17 +240,17 @@ public class ProgramFrame extends JFrame {
 					fx = powerFXTextField.getText();
 					System.out.println(solver.powerRule(fx));
 				}	
-				if(productSelector.isSelected())
+				else if(productSelector.isSelected())
 				{	
 					fx = productFXTextField.getText();
 					gx = productGXTextField.getText();
 					System.out.println(solver.productRule(fx, gx));
 				}	
-				else
+				else if(quotientSelector.isSelected())
 				{
 					fx = quotientFXTextField.getText();
 					gx = quotientGXTextField.getText();
-					solver.quotientRule(fx, gx);
+					System.out.println(solver.quotientRule(fx, gx));
 				}
 					
 						
