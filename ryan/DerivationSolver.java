@@ -103,7 +103,7 @@ public class DerivationSolver {
 		String numerator = ("(" + gx + ") " + powerRule(fx) + " - " + fx + " (" + powerRule(gx) + ")");
 		String denominator = "(" + gx + ")" + "^2";
 		
-		return numerator + "\n-----------------------------\n" + denominator;
+		return numerator + "    /    " + denominator;
 	}
 	
 	public void purgeOldData()

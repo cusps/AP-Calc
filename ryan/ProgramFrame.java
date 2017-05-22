@@ -143,6 +143,11 @@ public class ProgramFrame extends JFrame {
 		powerFXLabel.setBounds(160, 37, 46, 14);
 		equationPanel.add(powerFXLabel);
 		
+		JLabel equationTextField = new JLabel("");
+		equationTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		equationTextField.setBounds(10, 272, 679, 60);
+		contentPane.add(equationTextField);
+		
 		// Start RadioButton Block
 		
 		powerSelector.addActionListener(new ActionListener() {
@@ -238,19 +243,19 @@ public class ProgramFrame extends JFrame {
 				if(powerSelector.isSelected())
 				{
 					fx = powerFXTextField.getText();
-					System.out.println(solver.powerRule(fx));
+					equationTextField.setText(solver.powerRule(fx));
 				}	
 				else if(productSelector.isSelected())
 				{	
 					fx = productFXTextField.getText();
 					gx = productGXTextField.getText();
-					System.out.println(solver.productRule(fx, gx));
+					equationTextField.setText(solver.productRule(fx, gx));
 				}	
 				else if(quotientSelector.isSelected())
 				{
 					fx = quotientFXTextField.getText();
 					gx = quotientGXTextField.getText();
-					System.out.println(solver.quotientRule(fx, gx));
+					equationTextField.setText(solver.quotientRule(fx, gx));
 				}
 					
 						
@@ -259,5 +264,4 @@ public class ProgramFrame extends JFrame {
 		
 		
 	}
-
 }
