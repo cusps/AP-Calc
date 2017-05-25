@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 public class DerivationSolver {
 	private String equation;
 	private StringBuilder builder;
-
+	private ArrayList<Term> termList;
+	
 	public DerivationSolver() {
 		builder = new StringBuilder();
+		termList = new ArrayList<Term>();
 	}
 
 	public String powerRule(String fx) {
@@ -17,9 +21,14 @@ public class DerivationSolver {
 			builder.append("-");
 		
 		do {
+			
+			Term tempTerm = new Term();
+			
 			// Finds the integer of each term
 			if(Character.isDigit(fx.charAt(count)))
+			{
 				tempBaseString += fx.charAt(count);
+			}
 			
 			// Saves the term's integer and resets the string for the next term
 			if(fx.charAt(count) == 'x')
@@ -51,9 +60,12 @@ public class DerivationSolver {
 				
 				power = Integer.parseInt(powerString);
 				
-				// Actually do the math of power rule
-				builder.append((tempBase * power) + "x^" + (power - 1));
-								
+				tempTerm.setBase(tempBase);
+				tempTerm.setPower(power);
+				
+				builder.append(simplePowerRule(tempTerm.getBase(), tempTerm.getPower()));
+				termList.add(tempTerm);
+				
 				// Reset all data for the next term!!
 				power = 1;
 				powerString = "";
@@ -66,6 +78,7 @@ public class DerivationSolver {
 			// of the while loop if we are in bounds, but our power checker advances count
 			if(count == fx.length())
 				break;
+				
 			
 			// Add in our adding and subtracting signs
 			if(fx.charAt(count) == '+')
@@ -91,24 +104,28 @@ public class DerivationSolver {
 	}
 
 	public String productRule(String fx, String gx) 
-	{
-		purgeOldData();
-		builder.append(powerRule(fx) + "(" + gx + ")" + " + " + powerRule(gx) + "(" + fx + ")");
-		return builder.toString();
+	{	
+		return "(" + powerRule(fx) + ")(" + gx + ") + (" + powerRule(gx) + ")(" + fx + ")";
 	}
 
 	public String quotientRule(String fx, String gx) 
 	{
-		purgeOldData();
 		String numerator = ("(" + gx + ") " + powerRule(fx) + " - " + fx + " (" + powerRule(gx) + ")");
 		String denominator = "(" + gx + ")" + "^2";
 		
 		return numerator + "    /    " + denominator;
 	}
 	
+	public String simplePowerRule(int base, int power)
+	{
+		return (base * power) + "x^" + (power - 1);
+	}
+	
 	public void purgeOldData()
 	{
 		builder.delete(0, builder.toString().length());
+		for(int count = 0; count < termList.size(); count++)
+			termList.remove(0);
 	}
 
 }
